@@ -17,19 +17,35 @@ function initDemoMap(){
     );
 
     var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-  });
+	    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    });
 
-  var Esri_WorldShadedRelief = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
-	attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
-	maxZoom: 13
-  });
+    var Esri_WorldShadedRelief = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Shaded_Relief/MapServer/tile/{z}/{y}/{x}', {
+	    attribution: 'Tiles &copy; Esri &mdash; Source: Esri',
+	    maxZoom: 13
+    });
+
+    var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
+	    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	    subdomains: 'abcd',
+	    minZoom: 0,
+	    maxZoom: 20,
+	    ext: 'png'
+    });
+
+    var CartoDB_DarkMatter = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {
+	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>',
+	    subdomains: 'abcd',
+	    maxZoom: 19
+    });
 
     var baseLayers = {
         "Hillshade": Esri_WorldShadedRelief,
         "Topography": Esri_WorldTopoMap,
         "Satellite": Esri_WorldImagery,
-        "Grey Canvas": Esri_DarkGreyCanvas
+        "Grey Canvas": Esri_DarkGreyCanvas,
+        "Stamen Toner": Stamen_Toner,
+        "Dark": CartoDB_DarkMatter
     };
 
     var map = L.map('map', {
@@ -59,12 +75,12 @@ $.getJSON('velocity-field.json', function (data) {
 		displayOptions: {
 			velocityType: 'Water',
 			displayPosition: 'bottomleft',
-      angleConvention: 'bearingCW',
+            angleConvention: 'bearingCW',
 			displayEmptyString: 'No water data'
 		},
 		data: data,
-    maxVelocity: 0.,
-		maxVelocity: 1.,
+        maxVelocity: 0.,
+		maxVelocity: 2.,
 		velocityScale: 0.01 // arbitrary default 0.005
 	});
 
